@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mmvm_rest_apis_provider/utilities/routes/route_names.dart';
 import 'package:mmvm_rest_apis_provider/utilities/utils.dart';
-
+import 'package:mmvm_rest_apis_provider/view_model/auth_view_model.dart';
+import 'package:provider/provider.dart';
 import '../resources/components/round_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  ValueNotifier<bool> _obsecurepassword = ValueNotifier<bool>(true);
+  final ValueNotifier<bool> _obsecurepassword = ValueNotifier<bool>(true);
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   FocusNode emailfocusnode = FocusNode();
@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
+    final authviewmodel = Provider.of<AuthViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -79,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundButton(
               title: 'login',
+              loading: authviewmodel.loading,
               onpress: () {
                 if (emailcontroller.text.isEmpty) {
                   Utils.flushBarErrorMessage('enter email', context);
@@ -87,6 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 } else if (passwordcontroller.text.length < 6) {
                   Utils.flushBarErrorMessage(
                       'password should be more then 6', context);
+                } else {
+                  Map data = {
+                    'email': emailcontroller.text.toString(),
+                    'password': passwordcontroller.text.toString()
+                  };
+                  authviewmodel.loginApi(data, context);
                 }
               },
             )

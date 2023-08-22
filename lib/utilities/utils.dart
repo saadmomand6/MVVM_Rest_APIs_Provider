@@ -23,4 +23,10 @@ class Utils {
     return ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(message)));
   }
+
+  static void fieldfocuschange(
+      BuildContext context, FocusNode current, FocusNode nextfocus) {
+    current.unfocus();
+    FocusScope.of(context).requestFocus(nextfocus);
+  }
 }
