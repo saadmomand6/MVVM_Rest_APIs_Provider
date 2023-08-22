@@ -13,7 +13,14 @@ class AuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loginApi(dynamic data, BuildContext context) async {
+  bool _signuploading = false;
+  bool get signuploading => _signuploading;
+  setsignuploading(value) {
+    _signuploading = value;
+    notifyListeners();
+  }
+
+  Future<void> loginApiModel(dynamic data, BuildContext context) async {
     setloading(true);
     myrepository.loginApi(data).then((value) {
       setloading(false);
@@ -21,6 +28,18 @@ class AuthViewModel with ChangeNotifier {
       Navigator.pushNamed(context, RoutesNames.home);
     }).onError((error, stackTrace) {
       setloading(false);
+      Utils.flushBarErrorMessage(error.toString(), context);
+    });
+  }
+
+  Future<void> signupApiModel(dynamic data, BuildContext context) async {
+    setsignuploading(true);
+    myrepository.signupApi(data).then((value) {
+      setsignuploading(false);
+      Utils.flushBarErrorMessage('signup succesful', context);
+      Navigator.pushNamed(context, RoutesNames.home);
+    }).onError((error, stackTrace) {
+      setsignuploading(false);
       Utils.flushBarErrorMessage(error.toString(), context);
     });
   }
