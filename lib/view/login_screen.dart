@@ -91,9 +91,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   Utils.flushBarErrorMessage(
                       'password should be more then 6', context);
                 } else {
+                  // Map data = {
+                  //   'email': emailcontroller.text.toString(),
+                  //   'password': passwordcontroller.text.toString()
+                  // };
                   Map data = {
-                    'email': emailcontroller.text.toString(),
-                    'password': passwordcontroller.text.toString()
+                    'email': "eve.holt@reqres.in",
+                    'password': "cityslicka"
                   };
                   authviewmodel.loginApiModel(data, context);
                 }
