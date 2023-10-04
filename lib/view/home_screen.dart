@@ -17,9 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-      ),
-      body: Column(
-        children: [
+        actions: [
           InkWell(
               onTap: () {
                 userpreference.removeUser().then((value) {
@@ -27,6 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
               child: const Text('logout'))
+        ]
+      ),
+      body: Column(
+        children: [
+          
         ],
       ),
     );
